@@ -1,1 +1,22 @@
-// to do...
+package model
+
+case class Country (id: String,
+                    airport_ref: String,
+                    airport_ident: String,
+                    length_ft: Option[Float],
+                    width_ft: Option[Float],
+                    surface: String,
+                    lighted: Boolean,
+                    closed: Boolean,
+                    le_ident: String,
+                    le_latitude_deg: Option[Float],
+                    le_longitude_deg: Option[Float],
+                    le_elevation_ft: String,
+                    le_heading_degT: String,
+                    le_displaced_threshold_ft: String,
+                    he_ident: String,
+                    he_latitude_deg: Option[Float],
+                    he_longitude_deg: Option[Float],
+                    he_elevation_ft: String,
+                    he_heading_degT: String,
+                    he_displaced_threshold_ft: String)

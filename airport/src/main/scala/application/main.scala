@@ -17,7 +17,8 @@ object Show_airport {
 
 
     // runways
-        // to do...
+    val lst_runway = scala.io.Source.fromFile("src/resources/runways.csv").getLines()
+    getAllRunways(lst_runway)
   }
 
   def getAllAirports(lst: Iterator[String]) {
@@ -47,10 +48,48 @@ object Show_airport {
   }
 
   def getAllCountries(lst: Iterator[String]) {
-    // to do...
+    // split row by ","
+    lst.map(_.split(","))
+        // keep valid row
+        .filter(arr => arr.length == 6)
+        // generate object
+        .map(obj => Airport.apply(obj(0),
+                                  obj(1),
+                                  obj(2),
+                                  obj(3),
+                                  obj(4),
+                                  obj(5),
+                                  )
+              )
   }
   
   def getAllRunways(lst: Iterator[String]) {
-    // to do...
+    // split row by ","
+    lst.map(_.split(","))
+        // keep valid row
+        .filter(arr => arr.length == 20)
+        // generate object
+        .map(obj => Airport.apply(obj(0),
+                                  obj(1),
+                                  obj(2),
+                                  obj(3).toIntOption,
+                                  obj(4).toIntOption,
+                                  obj(5),
+                                  obj(6).toBooleanOption,
+                                  obj(7).toBooleanOption,
+                                  obj(8),
+                                  obj(9).toIntOption,
+                                  obj(10).toIntOption,
+                                  obj(11),
+                                  obj(12).toIntOption,
+                                  obj(13).toIntOption,
+                                  obj(14).toIntOption,
+                                  obj(15).toIntOption,
+                                  obj(16).toIntOption,
+                                  obj(17),
+                                  obj(18),
+                                  obj(19).toIntOption
+                                )
+              )
   }
 }
