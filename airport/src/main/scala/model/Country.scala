@@ -1,9 +1,9 @@
 package model
 
 final case class Country (id: String,
-                    code: String,
+                    code: String, // type CountryCode
                     name: String,
-                    continent: String,
+                    continent: String, // type ContinentCode
                     wikipedia_link: String, // type Link ?
                     keywords: Option[String])
 
