@@ -1,5 +1,7 @@
 package model
 
+// to do ...
+  // same as Airport
 case class Runway (id: String,
                     airport_ref: String,
                     airport_ident: String,
@@ -20,3 +22,8 @@ case class Runway (id: String,
                     he_elevation_ft: Option[Int],
                     he_heading_degT: Option[Float],
                     he_displaced_threshold_ft: Option[Float])
+
+object Runway {
+  def toRunway()
+  // to do ...
+}
