@@ -66,19 +66,25 @@ object NonEmptyString {
 final case class Latitude private (lat:Option[Float]) extends AnyVal
 object Latitude {
   def fromLatitude (lat:Option[Float]) = {
-    if (lat >= -90.0 && lat <= 90.0)
-      Some(Latitude(lat))
-    else
+    if (lat == None)
       None
+    else
+      if (lat.getOrElse(999) >= -90.0 && lat.getOrElse(999) <= 90.0)
+        Some(Latitude(lat))
+      else
+        None
   }
 }
 
 final case class Longitude private (lon:Option[Float]) extends AnyVal
 object Longitude {
   def fromLongitude (lon:Option[Float]) = {
-    if (lon >= -180.0 && lon <= 180.0)
-      Some(Longitude(lon))
-    else
+    if (lon == None)
       None
+    else
+      if (lon.getOrElse(999) >= -180.0 && lon.getOrElse(999) <= 180.0)
+        Some(Longitude(lon))
+      else
+        None
   }
 }
