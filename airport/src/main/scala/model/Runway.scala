@@ -24,6 +24,26 @@ case class Runway (id: String,
                     he_displaced_threshold_ft: Option[Float])
 
 object Runway {
-  def toRunway()
-  // to do ...
+  def toRunway(line: Array[String]) : Option[Runway] = Option(Runway.apply(line(0),
+                                                                              line(1),
+                                                                              line(2),
+                                                                              line(3),
+                                                                              Option(line(4)),
+                                                                              Option(line(5)),
+                                                                              Option(line(6)),
+                                                                              Option(line(7)),
+                                                                              Option(line(8)),
+                                                                              Option(line(9)),
+                                                                              Option(line(10)),
+                                                                              Option(line(11)),
+                                                                              Option(line(12)),
+                                                                              Option(line(13)),
+                                                                              Option(line(14)),
+                                                                              Option(line(15)),
+                                                                              Option(line(16)),
+                                                                              Option(line(17)),
+                                                                              Option(line(18)),
+                                                                              Option(line(19))
+                                                                           ) 
+  )
 }
