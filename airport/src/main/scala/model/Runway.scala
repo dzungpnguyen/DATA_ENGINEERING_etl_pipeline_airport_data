@@ -1,90 +1,44 @@
 package model
 
-// to do ...
-  // same as Airport
-case class Runway (id: Int,
+import scala.util.Try
+
+case class Runway ( id: Int,
                     airport_ref: Int,
-                    airport_ident: NonEmptyString,
-                    length_ft: Option[Int],
-                    width_ft: Option[Int],
+                    airport_ident: String,
                     surface: String,
-                    lighted: Option[Boolean],
-                    closed: Option[Boolean],
-                    le_ident: String,
-                    le_latitude_deg: Latitude,
-                    le_longitude_deg: Longitude,
-                    le_elevation_ft: Option[Int],
-                    le_heading_degT: Option[Float],
-                    le_displaced_threshold_ft: Option[Float],
-                    he_ident: Option[String],
-                    he_latitude_deg: Latitude,
-                    he_longitude_deg: Longitude,
-                    he_elevation_ft: Option[Int],
-                    he_heading_degT: Option[Float],
-                    he_displaced_threshold_ft: Option[Float])
+                    le_ident: String
+                  )
 
 object Runway {
-  def toRunway(line: Array[String]) : Option[Runway] = Option(Runway.apply(line(0).toInt,
-                                                                            line(1).toInt,
-                                                                            NonEmptyString(line(2)),
-                                                                            line(3).toIntOption,
-                                                                            line(4).toIntOption,
-                                                                            line(5),
-                                                                            line(6).toBooleanOption,
-                                                                            line(7).toBooleanOption,
-                                                                            line(8),
-                                                                            Latitude(line(9).toFloatOption),
-                                                                            Longitude(line(10).toFloatOption),
-                                                                            line(11).toIntOption,
-                                                                            line(12).toFloatOption,
-                                                                            line(13).toFloatOption,
-                                                                            Option(line(14)),
-                                                                            Latitude(line(15).toFloatOption),
-                                                                            Longitude(line(16).toFloatOption),
-                                                                            line(17).toIntOption,
-                                                                            line(18).toFloatOption,
-                                                                            line(19).toFloatOption
-                                                                            )
-                                                              )
-}
+  def fromCsvLine(line: List[String]): Option[Runway] = {
+    line.size match {
+      case _ if line.size > 8 => toRunway(line)
+      case _ => None
+    }
+  }
 
+  
+  // def fromCsvLine(line: List[String]): Option[Runway] = toRunway(line)
+
+  def toRunway(line: List[String]): Option[Runway] = {
+    ( Try(line(0).toInt).toOption, Try(line(1).toInt).toOption, Try(line(2).toString).toOption,
+      Try(line(5).toString).toOption, Try(line(8).toString).toOption) match {
+      case (Some(r1), Some(r2), Some(r3), Some(r4), Some(r5)) => Some(Runway(r1, r2, r3, r4, r5))
+      case _ => None
+    }
+  }
+}
 
 // -------------------- //
 // *** Custom types *** //
 // -------------------- //
 
-final case class NonEmptyString private (str:String) extends AnyVal
-object NonEmptyString {
-  def fromString (str:String) = {
-    if (str.length > 0)
-      Some(NonEmptyString(str))
-    else
-      None
-  }
-}
-
-final case class Latitude private (lat:Option[Float]) extends AnyVal
-object Latitude {
-  def fromLatitude (lat:Option[Float]) = {
-    if (lat == None)
-      None
-    else
-      if (lat.getOrElse(999) >= -90.0 && lat.getOrElse(999) <= 90.0)
-        Some(Latitude(lat))
-      else
-        None
-  }
-}
-
-final case class Longitude private (lon:Option[Float]) extends AnyVal
-object Longitude {
-  def fromLongitude (lon:Option[Float]) = {
-    if (lon == None)
-      None
-    else
-      if (lon.getOrElse(999) >= -180.0 && lon.getOrElse(999) <= 180.0)
-        Some(Longitude(lon))
-      else
-        None
-  }
-}
+// final case class NonEmptyString private (str:String) extends AnyVal
+// object NonEmptyString {
+//   def validate (str: String) = {
+//     if (str.length > 0)
+//       Some(NonEmptyString(str))
+//     else
+//       None
+//   }
+// }

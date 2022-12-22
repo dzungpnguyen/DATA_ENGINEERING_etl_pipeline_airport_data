@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0mD:\m1_efrei\scala\EFREI-Project-Airport\airport\src\main\scala\application\main.scala:53:42: value name is not a member of String[0m
-[0m[[0m[31merror[0m] [0m[0m    lst_countries.foreach(x => println(x.name))[0m
-[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mD:\m1_efrei\scala\EFREI-Project-Airport\airport\src\main\scala\application\main.scala:14:49: value size is not a member of model.Runway[0m
+[0m[[0m[31merror[0m] [0m[0m    println(result_runways.validLines.toList(1).size)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
