@@ -1,9 +1,5 @@
 package service
 
-// import model.Airport
-// import model.Country
-import model.Runway
-
 import scala.io.Source
 
 final case class readResult[A](validLines: List[A], nbInvalidLines: Int)
