@@ -10,35 +10,14 @@ case class Runway ( id: Int,
                   )
 
 object Runway {
-  def fromCsvLine(line: List[String]): Option[Runway] = {
-    line.size match {
+  def fromCsvLine(line: List[String]): Option[Runway] =
+    line.size match
       case _ if line.size > 8 => toRunway(line)
       case _ => None
-    }
-  }
 
-  
-  // def fromCsvLine(line: List[String]): Option[Runway] = toRunway(line)
-
-  def toRunway(line: List[String]): Option[Runway] = {
+  def toRunway(line: List[String]): Option[Runway] =
     ( Try(line(0).toInt).toOption, Try(line(1).toInt).toOption, Try(line(2).toString).toOption,
-      Try(line(5).toString).toOption, Try(line(8).toString).toOption) match {
+      Try(line(5).toString).toOption, Try(line(8).toString).toOption) match
       case (Some(r1), Some(r2), Some(r3), Some(r4), Some(r5)) => Some(Runway(r1, r2, r3, r4, r5))
       case _ => None
-    }
-  }
 }
-
-// -------------------- //
-// *** Custom types *** //
-// -------------------- //
-
-// final case class NonEmptyString private (str:String) extends AnyVal
-// object NonEmptyString {
-//   def validate (str: String) = {
-//     if (str.length > 0)
-//       Some(NonEmptyString(str))
-//     else
-//       None
-//   }
-// }
