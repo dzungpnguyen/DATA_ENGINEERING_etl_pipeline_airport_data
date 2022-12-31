@@ -2,8 +2,6 @@ package model
 
 import scala.util.Try
 
-import model.Runway
-
 final case class Country  ( id: Int,
                             code: String,
                             name: String

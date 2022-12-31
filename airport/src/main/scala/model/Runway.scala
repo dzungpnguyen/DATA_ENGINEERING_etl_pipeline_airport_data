@@ -16,8 +16,8 @@ object Runway {
       case _ => None
 
   def toRunway(line: List[String]): Option[Runway] =
-    ( Try(line(0).toInt).toOption, Try(line(1).toInt).toOption, Try(line(2).toString).toOption,
-      Try(line(5).toString).toOption, Try(line(8).toString).toOption) match
+    ( Try(line(0).toInt).toOption, Try(line(1).toInt).toOption, Try(line(2).toString.substring(1, line(2).toString.length()-1)).toOption,
+      Try(line(5).toString.substring(1, line(5).toString.length()-1)).toOption, Try(line(8).toString.substring(1, line(8).toString.length()-1)).toOption) match
       case (Some(r1), Some(r2), Some(r3), Some(r4), Some(r5)) => Some(Runway(r1, r2, r3, r4, r5))
       case _ => None
 }

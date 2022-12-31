@@ -4,6 +4,7 @@ package service
 
 import scala.io.StdIn.readLine
 import scala.collection.immutable.ListMap
+import scala.util.Try
 
 import model.Country
 import model.Airport
@@ -39,28 +40,55 @@ object DisplayingService {
     // get user's answer
     val identifier = readLine
     // get user's country
-    val userCountry = list_countries.filter(x => x.code.equals(identifier.toUpperCase) || x.name.toUpperCase.equals(identifier.toUpperCase))
+    val userCountry = list_countries.filter(x => x.code.equals(identifier.toUpperCase) || x.name.toUpperCase.startsWith(identifier.toUpperCase))
     userCountry.size match
       // country not found
       case 0 =>
+        // user entered 'exit'
         if (identifier.toLowerCase.equals("exit")) then
           exit
         else
           println("Country not found. Please re-enter your answer.")
           queryOption
-      // country found
+
+      // one or more than one country found because of fuzzy matching
       case _ =>
-        userCountry.foreach(country =>
+        // map each country with its index
+        val mapNumberCountry = userCountry.zipWithIndex.map{ case (v,i) => (i,v) }.toMap
+        
+        println("Please verify that your country is in the list by entering its number.")
+        println("Number | Country")
+        // display all possible countries
+        mapNumberCountry.foreach(x => println("---" + x._1 + "---+---" + x._2.name))
+        
+        // get user's country's index
+        val n = readLine
+        // convert to Int, if not successful then assign to -1
+        val num = Try(n.toInt).toOption.getOrElse(-1)
+        
+        // if index exists
+        if num >= 0 && num < userCountry.size then
           println("Country Code | Country Name | Airport ID | Runway ID")
-          println("-------------+--------------+------------+----------")
+          println("-------------+--------------+------------+----------") 
           list_airports.foreach(airport =>
-            if (airport.iso_country.equals(country.code)) then
+            // get airports in chosen country
+            if (airport.iso_country.equals(userCountry(num).code)) then
               list_runways.foreach(runway =>
+                // get runways in chosen airports
                 if (runway.airport_ident.equals(airport.ident)) then
-                  printf("-- %s --|-- %s --|-- %s --|-- %s --\n", country.code, country.name, airport.id, runway.id)
+                  // display
+                  printf("-- %s --|-- %s --|-- %s --|-- %s --\n", userCountry(num).code, userCountry(num).name, airport.id, runway.id)
               )
           )
-        )
+        // if index doesn't exist
+        else
+          println("Number not found.")
+
+        println("----------------------------------------")
+        println("Query ended.\nYou can continue the program or enter 'exit' to quit.")
+
+        // restart the program
+        getUserOption
 
   def reportsOption: Unit =
     println("----------------------------------------")
