@@ -47,6 +47,7 @@ object DisplayingService {
         // user entered 'exit'
         if (identifier.toLowerCase.equals("exit")) then
           exit
+        // user entered wrong code or name
         else
           println("Country not found. Please re-enter your answer.")
           queryOption
@@ -92,12 +93,19 @@ object DisplayingService {
 
   def reportsOption: Unit =
     println("----------------------------------------")
-    println("Choose your report type by entering its number:\n1. 10 countries with highest number of airports and countries with lowest number of airports.\n2. Type of runways per country.\n3. Top 10 most common runway latitude.\n*** Enter exit to end the program ***")
+    println("Choose your report type by entering its number:\n1. 10 countries with highest number of airports and countries with lowest number of airports.\n2. Type of runways per country.\n3. Top 10 most common runway latitude.\n*** Or type 'query' to run the Query Option. ***")
     val reportType = readLine
     reportType.toLowerCase match
-      case "1" => topNumberOfAirports
-      case "2" => runwaysType
-      case "3" => mostCommonRunwayLatitude
+      case "1" =>
+        topNumberOfAirports
+        reportsOption
+      case "2" =>
+        runwaysType
+        reportsOption
+      case "3" =>
+        mostCommonRunwayLatitude
+        reportsOption
+      case "query" => queryOption
       case "exit" => exit
       case _ =>
         println("Report type not found. Please re-enter your answer.")
@@ -119,7 +127,31 @@ object DisplayingService {
     // top 10 lowest
     ListMap(mapCountryCount.toSeq.sortWith(_._2 < _._2):_*).take(10).foreach(x => println(x._1 + "--+--" + x._2))
   
-  def runwaysType: Unit = println("ok")
+  def runwaysType: Unit =
+    println("----------------------------------------")
+    println("Types of runway per countries")
+
+    list_countries.foreach(country =>
+      print(country.name + " ---> ")
+      // list of airport's idents of one country
+      val ap_idents = list_airports
+                                    // filter airports which are belong to that country
+                                    .filter(_.iso_country.equals(country.code))
+                                    // get their idents
+                                    .map(_.ident)
+      // list of runways of each airport
+      list_runways.filter(y => ap_idents.contains(y.airport_ident))
+                  // get runways' types
+                  .map(_.surface)
+                  // remove duplicates
+                  .distinct
+                  // display
+                  .foreach(x => printf("%s | ", x))
+      // end one country's display
+      println
+      println("----------------------------------------")
+    )
+
   def mostCommonRunwayLatitude: Unit = println("ok")
 
   def exit: Unit =
