@@ -152,8 +152,25 @@ object DisplayingService {
       println("----------------------------------------")
     )
 
-  def mostCommonRunwayLatitude: Unit = println("ok")
+  def mostCommonRunwayLatitude: Unit =
+    // mapping Latitude - Number of occurrences
+                                  // get latitudes
+    val mapLatCount = list_runways.map(_.le_ident)
+                                  // group by latitudes
+                                  .groupBy(identity)
+                                  // count latitudes as value in pair (k,v) 
+                                  .mapValues(_.size)
+    println("----------------------------------------")
+    println("Top 10 most common runway latitude")
+    println("Latitude | Number of runways")
+    // sort desc by number of occurrences
+    ListMap(mapLatCount.toSeq.sortWith(_._2 > _._2):_*)
+            // get 10 first values
+            .take(10)
+            // display
+            .foreach(x => println(x._1 + "------+------" + x._2))
 
+  // force the program to shut down 
   def exit: Unit =
     println("----------------------------------------")
     println("Program ended.")
