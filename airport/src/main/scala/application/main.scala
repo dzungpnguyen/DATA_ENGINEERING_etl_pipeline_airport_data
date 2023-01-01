@@ -13,8 +13,11 @@ object MyApplication {
     val result_countries = ParsingService.parseCSV("src/resources/countries.csv", Country.fromCsvLine)
     val result_airports = ParsingService.parseCSV("src/resources/airports.csv", Airport.fromCsvLine)
 
-    println("----------------------------------------")
-    println("Program started.\n(Enter 'exit' any time to end the program)")
+    println("""
+      ----------------------------------------
+      Program started.
+      ENTER "EXIT" ANYTIME TO END THE PROGRAM.
+            """)
 
     DisplayingService.getUserOption
 }
