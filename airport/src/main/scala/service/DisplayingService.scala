@@ -50,6 +50,7 @@ object DisplayingService {
         
         println("""
       Please verify that your country is in the list by entering its number.
+
       Number | Country
                 """)
         // display all possible countries
@@ -124,14 +125,20 @@ object DisplayingService {
     val mapCountryCount = list_airports.map(_.iso_country).map(mapCountry(_)).groupBy(identity).mapValues(_.size)
 
     println("""
+      ---------------------------------------
+
       Top 10 countries with highest number of airports
+
       Country   |   Number of airports
             """)
     // top 10 highest
     ListMap(mapCountryCount.toSeq.sortWith(_._2 > _._2):_*).take(10).foreach(x => println("      " + x._1 + "--+--" + x._2))
 
     println("""
+      ---------------------------------------
+      
       Top 10 countries with lowest number of airports
+
       Country   |   Number of airports
             """)
     // top 10 lowest
@@ -171,6 +178,7 @@ object DisplayingService {
                                   .mapValues(_.size)
     println("""
       Top 10 most common runway latitude
+
       Latitude | Number of runways
             """)
     // sort desc by number of occurrences
