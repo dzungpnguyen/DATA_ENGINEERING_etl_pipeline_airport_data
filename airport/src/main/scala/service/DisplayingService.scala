@@ -6,21 +6,14 @@ import scala.io.StdIn.readLine
 import scala.collection.immutable.ListMap
 import scala.util.Try
 
-import model.Country
-import model.Airport
-import model.Runway
-
-import service.StoringService
+import model._
+import service._
 
 object DisplayingService {
 
   val list_countries = StoringService.getObjects("src/resources/countries.csv", Country.fromCsvLine)
   val list_airports = StoringService.getObjects("src/resources/airports.csv", Airport.fromCsvLine)
   val list_runways = StoringService.getObjects("src/resources/runways.csv", Runway.fromCsvLine)
-
-  // mapping country code -> country name
-  // if name not found, return original code
-  val mapCountry = list_countries.map(_.code).zip(list_countries.map(_.name)).toMap.withDefault(i => i)
 
   def getUserOption: Unit =
     println("      Query or Reports?")
@@ -123,6 +116,10 @@ object DisplayingService {
         reportsOption
 
   def topNumberOfAirports: Unit =
+
+    // mapping country code -> country name
+    // if name not found, return original code
+    val mapCountry = list_countries.map(_.code).zip(list_countries.map(_.name)).toMap.withDefault(i => i)
     // mapping country -> count Airport
     val mapCountryCount = list_airports.map(_.iso_country).map(mapCountry(_)).groupBy(identity).mapValues(_.size)
 
