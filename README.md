@@ -1,4 +1,4 @@
-# Final project of Functional Scala course
+Final project of Functional Scala course
 -----
 Simulate ETL pipeline system in functional Scala that:
 <ul>
